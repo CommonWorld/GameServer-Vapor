@@ -10,6 +10,29 @@ public func routes(_ router: Router) throws {
     router.get("hello") { req in
         return "Hello, world!"
     }
+    
+    router.get("rickard") { req in
+        return "Rickard was here!"
+    }
+    
+    //Basic Parameter
+    router.get("hello", String.parameter) { req -> String in
+        let name = try req.parameters.next(String.self)
+        return "Hello, \(name)"
+    }
+    
+    
+    // this calls a method (with logic controller file)
+    let helloController = HelloController()
+    //Basic
+    router.get("greet", use: helloController.greet)
+    // with a Parameter
+    router.get("greet", String.parameter) { req -> String in
+        let name = try req.parameters.next(String.self)
+        let answer = try helloController.sayHello(name: name)
+        return answer
+    }
+    
 }
 
 
