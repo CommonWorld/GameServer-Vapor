@@ -6,7 +6,10 @@ import Vapor
 /// Register your application's routes here.
 ///
 /// [Learn More →](https://docs.vapor.codes/3.0/getting-started/structure/#routesswift)
+
 public func routes(_ router: Router) throws {
+    
+    //basic get example
     router.get("hello") { req in
         return "Hello, world!"
     }
@@ -21,17 +24,30 @@ public func routes(_ router: Router) throws {
         return "Hello, \(name)"
     }
     
+    //basic post examples
+    router.post(InfoData.self, at: "info") { req, data -> InfoResponse in
+        return InfoResponse(request: data)
+    }
+    struct InfoData: Content {
+        let name: String
+    }
+    struct InfoResponse: Content {
+        let request: InfoData
+    }
     
     // this calls a method (with logic controller file)
     let helloController = HelloController()
     //Basic
     router.get("greet", use: helloController.greet)
-    // with a Parameter
+    // with a Parameter (test with name of 'Marvin'
     router.get("greet", String.parameter) { req -> String in
         let name = try req.parameters.next(String.self)
         let answer = try helloController.sayHello(name: name)
         return answer
     }
+    
+    
+    
     
 }
 
