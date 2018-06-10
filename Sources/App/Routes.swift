@@ -21,7 +21,7 @@ public func routes(_ router: Router) throws {
     //Basic Parameter
     router.get("hello", String.parameter) { req -> String in
         let name = try req.parameters.next(String.self)
-        runPrint(num: 1)
+        runPrint(num: 3)
         print("request for hello")
         return "Hello, \(name)"
     }
@@ -44,6 +44,7 @@ public func routes(_ router: Router) throws {
     router.get("greet", use: helloController.greet)
     // with a Parameter (test with name of 'Marvin'
     router.get("greet", String.parameter) { req -> String in
+        runPrint(num: 4)
         let name = try req.parameters.next(String.self)
         let answer = try helloController.sayHello(name: name)
         return answer
@@ -54,8 +55,10 @@ public func routes(_ router: Router) throws {
 
 public func runPrint(num: Int) {
     switch num {
-    case 1: print("hello Ran")
-    case 2: print("post Ran")
+    case 1: print("Hello Ran")
+    case 2: print("Post Ran")
+    case 3: print("Hello-name Ran")
+    case 4: print("HelloController Ran")
     default: print("other ran")
     }
 }
