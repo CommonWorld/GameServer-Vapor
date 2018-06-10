@@ -21,11 +21,14 @@ public func routes(_ router: Router) throws {
     //Basic Parameter
     router.get("hello", String.parameter) { req -> String in
         let name = try req.parameters.next(String.self)
+        runPrint(num: 1)
+        print("request for hello")
         return "Hello, \(name)"
     }
     
     //basic post examples
-    router.post(InfoData.self, at: "info") { req, data -> InfoResponse in
+    router.post(InfoData.self, at: "Info") { req, data -> InfoResponse in
+        runPrint(num: 2)
         return InfoResponse(request: data)
     }
     struct InfoData: Content {
@@ -45,14 +48,17 @@ public func routes(_ router: Router) throws {
         let answer = try helloController.sayHello(name: name)
         return answer
     }
-    
-    
-    
-    
+  
 }
 
 
-
+public func runPrint(num: Int) {
+    switch num {
+    case 1: print("hello Ran")
+    case 2: print("post Ran")
+    default: print("other ran")
+    }
+}
 
 
 

@@ -21,4 +21,7 @@ public func configure(
     services.register(router, as: Router.self)
     
     // Configure the rest of your application here
+    
+    
+    
 }
